@@ -1,0 +1,177 @@
+<html lang="en">
+    <head>
+        <title>GSAP Project</title>
+        <link href="style.css" type="text/css" rel="stylesheet">
+        <link href="sliderStyles.css" type="text/css" rel="stylesheet">
+    </head>
+    
+
+    <body>
+        <nav>
+            <div class="logo">WEB</div>
+            <ul class="menu">
+                <li>About</li>
+                <li>Contact</li>
+                <li>Work</li>
+            </ul>
+        </nav>
+
+        <section class="section-1">
+            <div class="text-container">
+                <p class="txt">Web Development</p>
+            </div>
+
+            <div class="container"></div>
+        </section>
+
+      
+        <div class="gallery">
+            <ul class="cards">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+   
+    <script src="./script.js" type="text/javascript"></script>
+
+     <script>
+        
+        gsap.registerPlugin(ScrollTrigger);
+        
+        let iteration = 0;
+        let item=0;
+        let index=0;
+    
+        const spacing = 0.05;
+
+        snap = gsap.utils.snap(spacing);
+        cards = gsap.utils.toArray(".cards li");
+        console.log(cards)
+        seamlessLoop = buildSeamlessLoop(cards,spacing);
+        scrub = gsap.to(seamlessLoop, {
+            totalTime : 0,
+            duration:0.2,
+            ease : "power3",
+            paused : true
+        })
+        
+        
+        trigger = ScrollTrigger.create({
+            start : 1300,
+            onUpdate(self){
+                if(self.progress ===1 && self.direction>0 && !self.wrapping){
+                    
+                    wrapForward(self);
+                }
+                else if(self.progress > 1 && self.direction <0 && !self.wrapping){
+                    console.log(self.progress)
+                    // wrapBackword(self)
+                }
+                else{
+                    scrub.vars.totalTime  = snap((iteration + self.progress)* seamlessLoop.duration());
+                    scrub.invalidate().restart();
+                    self.wrapping = false;
+                }
+            },
+            end : "+=3000",
+            pin : ".gallery"
+        })
+        
+        
+        function wrapForward(trigger){
+            iteration++;
+            trigger.wrapping = true;
+            trigger.scroll(trigger.start+1);
+        }
+        
+        function wrapBackword(trigger){
+            iteration--;
+            if(iteration < 0){
+                iteration=2;
+                seamlessLoop.totalTime(
+                    seamlessLoop.totalTime() + seamlessLoop.duration() *10
+                );
+                scrub.pause();
+            }
+            trigger.wrapping = true;
+            trigger.scroll(trigger.end-1)
+        }
+        
+        
+        function buildSeamlessLoop(items,spacing){
+            let overlap = Math.ceil((1/spacing)*2),
+            startTime = items.length *spacing * 0.5,
+            loopTime = (items.length + overlap) * spacing +1,
+            rawSequence  = gsap.timeline({paused : true}),
+            seamlessLoop = gsap.timeline({
+                paused : true,
+                repeat : -1,
+                onRepeat(){
+                    this._time === this._dur && (this._tTime += this._dur - 0.05)
+                },
+            });
+            (l = items.length +overlap *2), (time = 0 ),i, index,item;
+        
+            gsap.set(items, {yPercent : 400, opacity : 1, scale : 0 })
+        
+            for(var i=0; i<l ; i++){
+                index = i % items.length,
+                item = items[index];
+                time = i * spacing
+                rawSequence.fromTo(item, {
+                    scale : 0,
+                    opacity : 1
+                },{
+                    scale : 1,
+                    opacity: 1,
+                    zIndex : 100,
+                    duration : 0.5,
+                    yoyo : true,
+                    repeat : 1,
+                    ease : "power1.in",
+                    immediateRender : false,
+                },time).fromTo(
+                    item, {yPercent : 300},
+                    {
+                        yPercent : -200,
+                        duration: 1,
+                        ease : "none",
+                        immediateRender : false
+                    },
+                    time
+                );
+                i <= items.length  && seamlessLoop.add('label' + i, time);
+            }
+        
+            rawSequence.time(startTime);
+            seamlessLoop.to(rawSequence,{
+                time: loopTime,
+                duration : loopTime - startTime,
+                ease : "none"
+            }) 
+            .fromTo(rawSequence,  { time : overlap + spacing*1},{
+                time : startTime,
+                duration :  startTime - (overlap *spacing+1),
+                immediateRender : false,
+                ease : "none"
+            })
+            return seamlessLoop;
+        }
+            </script>
+</html>

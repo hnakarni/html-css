@@ -1,0 +1,70 @@
+
+
+
+
+
+.gallery{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-image: linear-gradient(darkblue, gray);
+    /* background-image: linear-gradient(blue, red) no-repeat; */
+}
+
+.cards {
+    position: absolute;
+    width: 80vw;
+    height: 100vh;
+    top:90%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
+
+.cards li {
+    list-style: none;
+    padding: 0;
+    margin: 0px;
+    width: 80vw;
+    height: 70rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+li:nth-child(4){
+    background: url('image/course1.jpg') no-repeat 50% 50%;
+
+}
+
+li:nth-child(5){
+    background: url('image/course2.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(6){
+    background: url('image/course3.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(7){
+    background: url('image/course4.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(8){
+    background: url('image/course5.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(9){
+    background: url('image/course6.png') no-repeat 50% 50%;
+}
+
+li:nth-child(10){
+    background: url('image/course7.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(11){
+    background: url('image/course8.jpg') no-repeat 50% 50%;
+}
+
+li:nth-child(12){
+    background: url('image/course9.jpg') no-repeat 50% 50%;
+}

@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Literata");
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family:  "Signika", sans-serif;
+    /* background-image:  linear-gradient(blue, red); */
+    color : #111;
+    overflow-x: hidden;
+}
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:  3rem;
+    position: fixed;
+    width: 100%;
+    z-index: 11;
+}
+.logo{
+    font-family: "Signika", sans-serif;
+    gap :3rem;
+    list-style: none;
+    font-weight: 700;
+    font-size: larger;
+    color: white;
+    
+}
+.menu{
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    font-weight: 400;
+    color:white;
+    font-size: large;
+}
+section{
+    min-height: 100vh;
+     background-image:  linear-gradient(blue, red);
+}
+.section-1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    color:white
+}
+.text-container p{
+    font-size: 8rem;
+    font-weight: 100;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+    gap: 8rem;
+    width: 100%;
+    
+
+}
+.img{
+    height: 170px;
+    width: 170px;
+    object-fit: cover;
+    border-radius: 10%;
+}
+
